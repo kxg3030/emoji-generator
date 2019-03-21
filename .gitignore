@@ -1,3 +1,4 @@
 /pkg/assets/*
 /pkg/template/*
 .env
+/logger/*.log
