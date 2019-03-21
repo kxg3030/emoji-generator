@@ -1,4 +1,4 @@
-package index
+package task
 
 import (
 	"emoji/pkg/config"

@@ -6,6 +6,7 @@ import (
 	"emoji/pkg/logger"
 	"emoji/pkg/middleware"
 	"emoji/pkg/router"
+	"emoji/pkg/task"
 	"emoji/pkg/unity"
 	"github.com/gin-gonic/gin"
 	"github.com/gohouse/gorose"
@@ -33,6 +34,7 @@ func (this *Bootstrap)Init()*Bootstrap  {
 	this.setAssetsPath()
 	this.initFrameworkRouter()
 	this.initLoggerFramework()
+	this.initTask()
 	this.setOrm()
 	return this
 }
@@ -110,6 +112,10 @@ func (this *Bootstrap)initLoggerFramework()  {
 	filed := zap.Fields(zap.String("serviceName", "emoji"))
 	// 构造日志
 	logger.Logger = zap.New(core, caller, development, filed)
+}
+
+func (this Bootstrap)initTask()  {
+	task.NewTask(config.RUNTIME_PATH).DeleteExpireAssFile()
 }
 
 
