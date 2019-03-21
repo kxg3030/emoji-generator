@@ -10,6 +10,7 @@ import (
 	"emoji/pkg/unity"
 	"github.com/gin-gonic/gin"
 	"github.com/gohouse/gorose"
+	"github.com/joho/godotenv"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -29,11 +30,12 @@ func NewBootstrap(framework *gin.Engine)*Bootstrap  {
 }
 
 func (this *Bootstrap)Init()*Bootstrap  {
+	this.initLoggerFramework()
+	this.initFrameworkRouter()
 	this.setDebugMode()
 	this.setMiddleware()
 	this.setAssetsPath()
-	this.initFrameworkRouter()
-	this.initLoggerFramework()
+	this.initEnv()
 	this.initTask()
 	this.setOrm()
 	return this
@@ -70,8 +72,13 @@ func (this *Bootstrap)setAssetsPath()  {
 
 func (this *Bootstrap)setOrm()  {
 	var err error
+	config.Database.Dsn   = unity.GetEnvVal("mysql")
 	database.Database,err = gorose.Open(config.Database)
 	unity.ErrorCheck(err)
+}
+
+func (this *Bootstrap)initEnv()  {
+	unity.ErrorCheck(godotenv.Load())
 }
 
 func (this *Bootstrap)initLoggerFramework()  {
@@ -117,6 +124,7 @@ func (this *Bootstrap)initLoggerFramework()  {
 func (this Bootstrap)initTask()  {
 	task.NewTask(config.RUNTIME_PATH).DeleteExpireAssFile()
 }
+
 
 
 

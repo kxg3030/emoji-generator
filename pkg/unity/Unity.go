@@ -2,9 +2,9 @@ package unity
 
 import (
 	"crypto/md5"
+	"emoji/pkg/logger"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"reflect"
 	"time"
@@ -12,7 +12,7 @@ import (
 
 func ErrorCheck(err error)  {
 	if err != nil {
-		log.Logger.Panic(err.Error())
+		logger.Logger.Error(err.Error())
 		panic(err.Error())
 	}
 }
@@ -79,4 +79,8 @@ func DynamicProxyCall(object interface{},method string,args ...interface{})[]ref
 		params[key] = reflect.ValueOf(val)
 	}
 	return reflect.ValueOf(object).MethodByName(method).Call(params)
+}
+
+func GetEnvVal(key string)string  {
+	return os.Getenv(key)
 }

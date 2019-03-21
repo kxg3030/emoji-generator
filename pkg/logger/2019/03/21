@@ -1,0 +1,7 @@
+{"level":"error","time":"2019/03/21/17","line":"C:/360Download/PhpStudy/PHPTutorial/WWW/Go/emoji/pkg/unity/Unity.go:16","msg":"Can't separate key from value","serviceName":"emoji"}
+{"level":"error","time":"2019/03/21/17","line":"C:/360Download/PhpStudy/PHPTutorial/WWW/Go/emoji/pkg/unity/Unity.go:16","msg":"Can't separate key from value","serviceName":"emoji"}
+{"level":"error","time":"2019/03/21/18","line":"C:/360Download/PhpStudy/PHPTutorial/WWW/Go/emoji/pkg/unity/Unity.go:16","msg":"Error 1045: Access denied for user ''@'localhost' (using password: NO)","serviceName":"emoji"}
+{"level":"error","time":"2019/03/21/18","line":"C:/360Download/PhpStudy/PHPTutorial/WWW/Go/emoji/pkg/unity/Unity.go:16","msg":"Error 1045: Access denied for user ''@'localhost' (using password: NO)","serviceName":"emoji"}
+{"level":"error","time":"2019/03/21/18","line":"C:/360Download/PhpStudy/PHPTutorial/WWW/Go/emoji/pkg/unity/Unity.go:17","msg":"Error 1045: Access denied for user ''@'localhost' (using password: NO)","serviceName":"emoji"}
+{"level":"error","time":"2019/03/21/18","line":"C:/360Download/PhpStudy/PHPTutorial/WWW/Go/emoji/pkg/unity/Unity.go:15","msg":"Can't separate key from value","serviceName":"emoji"}
+{"level":"error","time":"2019/03/21/18","line":"C:/360Download/PhpStudy/PHPTutorial/WWW/Go/emoji/pkg/unity/Unity.go:15","msg":"Error 1045: Access denied for user ''@'localhost' (using password: NO)","serviceName":"emoji"}

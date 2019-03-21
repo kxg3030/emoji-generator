@@ -41,5 +41,5 @@ var Database = &gorose.DbConfigSingle{
 	SetMaxOpenConns: 0,
 	SetMaxIdleConns: 0,
 	Prefix:          "xm_",
-	Dsn:             "root:root@tcp(127.0.0.1:3306)/xm_emoji?charset=utf8",
+	Dsn:             "",
 }
