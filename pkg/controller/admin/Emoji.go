@@ -8,11 +8,14 @@ import (
 	"emoji/pkg/system"
 	"emoji/pkg/unity"
 	"emoji/pkg/validate"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
+	"io/ioutil"
 	"os/exec"
 	"path"
+	"regexp"
 	"strings"
 	"time"
 )
@@ -58,6 +61,25 @@ func (this *Emoji)UploadFile(ctx *gin.Context)  {
 		}
 		_,err := io.Copy(templateFilePtr,filePtr)
 		unity.ErrorCheck(err)
+		if(fileExt != ".mp4"){
+			fileStr,err := ioutil.ReadFile(templateFilePath)
+			unity.ErrorCheck(err)
+			match,err := regexp.Compile("Dialogue: (\\d,\\d:\\d{0,2}:\\d{0,2}\\.\\d{0,2}){2},\\w+,(,\\d{0,2}){3}(,){2}[\u4e00-\u9fa5a-zA-Z0-9]{0,}")
+			unity.ErrorCheck(err)
+			matchString := match.FindAllString(string(fileStr),-1)
+			if len(matchString) == 0 {
+				unity.ErrorCheck(errors.New("can not match anything"))
+			}
+			matchCount := len(matchString)
+			for key,val := range matchString{
+				match,err := regexp.Compile("Dialogue: (\\d,\\d:\\d{0,2}:\\d{0,2}\\.\\d{0,2}){2},\\w+,(,\\d{0,2}){3}(,){2}")
+				matchStr  := match.FindString(val)
+				unity.ErrorCheck(err)
+				matchString[key] = strings.TrimPrefix(val,matchStr)
+			}
+			emojiFile.SentenceCount = matchCount
+			emojiFile.Sentence      = strings.Join(matchString,"|")
+		}
 		logicInstance := logic.NewEmojiFileLogic(database.GetOrm())
 		if ok := logicInstance.InsertNewFileRecord(emojiFile);ok{
 			system.PrintSuccess(ctx,200,"", map[string]interface{}{})
@@ -77,6 +99,8 @@ func (this *Emoji)GeneratorGifFromVideo(ctx *gin.Context)  {
 	}
 	result := logic.NewEmojiFileLogic(database.GetOrm()).GetSysFileList(emoji)
 	var sysFileName string
+	gifExt := ".gif"
+	pngExt := ".png"
 	if len(result) == 2 {
 		var sysFilePath,sysAssFile,sysSaveName string
 		for _,val := range result{
@@ -89,16 +113,24 @@ func (this *Emoji)GeneratorGifFromVideo(ctx *gin.Context)  {
 			sysSaveName = val["name"].(string)
 			sysFileName = val["name"].(string)
 		}
-		sysSaveName = config.ASSETS_PATH + sysSaveName + ".gif"
-		var command =  &exec.Cmd{}
-		command = exec.Command("ffmpeg","-y","-i",sysFilePath,"-vf",fmt.Sprintf("ass=%s",sysAssFile),sysSaveName)
-		if _,err := command.CombinedOutput();err != nil{
-			unity.ErrorCheck(err)
-		}
-		imageUrl := ctx.Request.Host + "/assets/" + sysFileName + ".gif"
-		if logic.NewEmojiFileLogic(database.GetOrm()).UpdateSysFileImageUrl(imageUrl,code){
+		sysSaveName = config.ASSETS_PATH + sysSaveName + gifExt
+		imageUrl := ctx.Request.Host + "/assets/" + sysFileName + gifExt
+		coverUrl := ctx.Request.Host + "/assets/" + sysFileName + pngExt
+		coverSave:= config.ASSETS_PATH + sysFileName + pngExt
+		go func() {
+			var command =  &exec.Cmd{}
+			command = exec.Command("ffmpeg","-y","-i",sysFilePath,"-vf",fmt.Sprintf("ass=%s",sysAssFile),sysSaveName)
+			if _,err := command.CombinedOutput();err != nil{
+				unity.ErrorCheck(err)
+			}
+		}()
+		go func() {
+			this.GeneratorCoverFromVideo(sysFilePath,sysFileName,coverSave,code)
+		}()
+		if logic.NewEmojiFileLogic(database.GetOrm()).UpdateSysFileImageUrl(imageUrl,coverUrl,code){
 			system.PrintSuccess(ctx,201,"",map[string]interface{}{
 				"url" : imageUrl,
+				"cov" : coverUrl,
 			})
 			return
 		}
@@ -106,6 +138,17 @@ func (this *Emoji)GeneratorGifFromVideo(ctx *gin.Context)  {
 		return
 	}
 	system.PrintException(ctx,103,"",map[string]interface{}{})
+}
+
+func (this Emoji)GeneratorCoverFromVideo(sysFilePath string,sysFileName string,saveFilePath string,code string)bool  {
+	var command =  &exec.Cmd{}
+	command = exec.Command("ffmpeg","-y",
+		"-i", sysFilePath, "-vframes", "1", "-ss", "0:0:0", "-an",
+		"-vcodec", "png", "-f", "rawvideo", "-s", "100*100", saveFilePath)
+	if _,err := command.CombinedOutput();err != nil {
+		return true
+	}
+	return false
 }
 
 

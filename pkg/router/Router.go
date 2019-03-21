@@ -11,9 +11,9 @@ type Router struct {
 }
 
 func NewRouter(frameworkRouter *gin.Engine)*Router  {
-	router := new(Router)
-	router.Router = frameworkRouter
-	return router
+	return &Router{
+		Router:frameworkRouter,
+	}
 }
 
 func (this *Router)RegisterRouter()*gin.Engine  {

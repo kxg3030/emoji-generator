@@ -1,2 +1,2 @@
-/pkg/assets/*
-/pkg/template/*
+/pkg/assets/*.ass
+/pkg/template/*.mp4

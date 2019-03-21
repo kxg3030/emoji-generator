@@ -7,8 +7,8 @@ import (
 )
 const OS_SEPREATOR  = "/"
 const ROOT_PATH     = "." + OS_SEPREATOR
-const PAKAGE_PATH   = ROOT_PATH   + "pkg" + OS_SEPREATOR
-const ASSETS_PATH   = PAKAGE_PATH   + "assets" + OS_SEPREATOR
+const PAKAGE_PATH   = ROOT_PATH   + "pkg"      + OS_SEPREATOR
+const ASSETS_PATH   = PAKAGE_PATH + "assets"   + OS_SEPREATOR
 const TEMPLATE_PATH = PAKAGE_PATH + "template" + OS_SEPREATOR
 const RUNTIME_PATH  = PAKAGE_PATH + "runtime"  + OS_SEPREATOR
 const ASS_FILE_EXT  = ".ass"
