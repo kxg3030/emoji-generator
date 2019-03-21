@@ -7,6 +7,10 @@ require (
 	github.com/golang/protobuf v1.3.0 // indirect
 	github.com/mattn/go-isatty v0.0.6 // indirect
 	github.com/ugorji/go/codec v0.0.0-20190309163734-c4a1c341dc93 // indirect
+	go.uber.org/atomic v1.3.2 // indirect
+	go.uber.org/multierr v1.1.0 // indirect
+	go.uber.org/zap v1.9.1
 	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
+	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/yaml.v2 v2.2.2 // indirect
 )

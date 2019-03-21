@@ -16,6 +16,7 @@ func NewRouter(frameworkRouter *gin.Engine)*Router  {
 	}
 }
 
+// register router
 func (this *Router)RegisterRouter()*gin.Engine  {
 	emojiIndex := index.NewEmoji()
 	emojiAdmin := admin.NewEmoji()

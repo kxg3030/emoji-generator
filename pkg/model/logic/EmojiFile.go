@@ -16,6 +16,7 @@ func NewEmojiFileLogic(orm *gorose.Session)*EmojiFileLogic  {
 	}
 }
 
+// insert new record
 func (this *EmojiFileLogic) InsertNewFileRecord(emoji entity.EmojiFile) bool  {
 	result ,err  := this.Orm.Table("sys_emoji_file").Where(map[string]interface{}{
 		"md5_encode"  : emoji.Md5Encode,
@@ -38,6 +39,7 @@ func (this *EmojiFileLogic) InsertNewFileRecord(emoji entity.EmojiFile) bool  {
 	return insertId >= 1
 }
 
+// get sys file from database
 func (this *EmojiFileLogic)GetSysFileList(emoji entity.EmojiFile)[]map[string]interface{}  {
 	result,err := this.Orm.Table("sys_emoji_file").Where(map[string]interface{}{
 		"md5_encode" : emoji.Md5Encode,
@@ -46,6 +48,7 @@ func (this *EmojiFileLogic)GetSysFileList(emoji entity.EmojiFile)[]map[string]in
 	return result
 }
 
+// update database column
 func (this *EmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 string)bool  {
 	_,err := this.Orm.Table("sys_emoji_file").Where("md5_encode",md5).Data(map[string]interface{}{
 		"image_url" : url,

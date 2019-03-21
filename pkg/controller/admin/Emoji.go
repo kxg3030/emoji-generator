@@ -30,6 +30,7 @@ func NewEmoji()*Emoji  {
 	}
 }
 
+// upload file
 func (this *Emoji)UploadFile(ctx *gin.Context)  {
 	var emojiFile entity.EmojiFile
 	filePtr,header,err := ctx.Request.FormFile("file")
@@ -91,6 +92,7 @@ func (this *Emoji)UploadFile(ctx *gin.Context)  {
 	system.PrintException(ctx,101,"", map[string]interface{}{})
 }
 
+// async convert mp4 to gif
 func (this *Emoji)GeneratorGifFromVideo(ctx *gin.Context)  {
 	var emoji entity.EmojiFile
 	code := ctx.Param("code")
@@ -140,6 +142,7 @@ func (this *Emoji)GeneratorGifFromVideo(ctx *gin.Context)  {
 	system.PrintException(ctx,103,"",map[string]interface{}{})
 }
 
+// async convert mp4 to png
 func (this Emoji)GeneratorCoverFromVideo(sysFilePath string,sysFileName string,saveFilePath string,code string)bool  {
 	var command =  &exec.Cmd{}
 	command = exec.Command("ffmpeg","-y",

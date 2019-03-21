@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"reflect"
 	"time"
@@ -11,6 +12,7 @@ import (
 
 func ErrorCheck(err error)  {
 	if err != nil {
+		log.Logger.Panic(err.Error())
 		panic(err.Error())
 	}
 }
