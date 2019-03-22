@@ -1,8 +1,7 @@
 FROM golang:latest
 MAINTAINER "kxg3030@sina.com"
 WORKDIR /home/emoji
-ENV ENV pro
-ENV GOPROXY=https://goproxy.io
+ENV ACTION pro
 COPY . .
-RUN rm -f .env && cp .env.$ENV .env && go build -o main Index.go
+RUN rm -f .env && cp .env.$ACTION .env && go build -o main Index.go
 CMD ["./main"]
