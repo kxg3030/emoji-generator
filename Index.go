@@ -1,12 +1,12 @@
 package main
 
 import (
-	"emoji/pkg/bootrap"
+	"emoji/pkg/bootstrap"
 	"github.com/gin-gonic/gin"
 )
 
 func main()  {
-	bootstrap := bootrap.NewBootstrap(gin.New()).Init()
-	bootstrap.Run(":8080")
+	engine := bootstrap.NewBootstrap(gin.New()).Init()
+	engine.Run(":8080")
 }
 

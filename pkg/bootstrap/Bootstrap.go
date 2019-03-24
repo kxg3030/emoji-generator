@@ -1,4 +1,4 @@
-package bootrap
+package bootstrap
 
 import (
 	"emoji/pkg/config"
