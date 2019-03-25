@@ -54,7 +54,7 @@ func GetExceptionMessage(code int)map[string]interface{}  {
 		msg = val
 	}
 	result := map[string]interface{}{
-		"status" : true,
+		"status" : false,
 		"msg"    : msg,
 		"code"   : code,
 		"data"   : map[string]interface{}{},
