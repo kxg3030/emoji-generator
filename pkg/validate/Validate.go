@@ -1,6 +1,8 @@
 package validate
 
-import "emoji/pkg/config"
+import (
+	"emoji/pkg/config"
+)
 
 func ExtIsIllegal(ext string)bool  {
 	var contain = false
@@ -10,4 +12,11 @@ func ExtIsIllegal(ext string)bool  {
 		}
 	}
 	return contain
+}
+
+func WhetherParamExist(param string)bool  {
+	if param == ""{
+		return false
+	}
+	return true
 }

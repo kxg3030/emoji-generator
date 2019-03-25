@@ -31,8 +31,8 @@ func NewBootstrap(framework *gin.Engine)*Bootstrap  {
 
 func (this *Bootstrap)Init()*Bootstrap  {
 	this.initLoggerFramework()
+	this.setGlobalMiddleware()
 	this.setAssetsPath()
-	this.setMiddleware()
 	this.initFrameworkRouter()
 	this.setDebugMode()
 	this.initEnv()
@@ -57,8 +57,8 @@ func (this *Bootstrap)setDebugMode()  {
 	}
 }
 
-func (this *Bootstrap)setMiddleware()  {
-	middlewareHandle,ok := config.Config["MiddleWare"].([]middleware.MiddlewareInterface)
+func (this *Bootstrap)setGlobalMiddleware()  {
+	middlewareHandle,ok := config.Config["GlobalMiddleWare"].([]middleware.MiddlewareInterface)
 	if ok{
 		for _,val := range middlewareHandle{
 			this.Framework.Use(val.Render())

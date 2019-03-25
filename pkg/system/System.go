@@ -11,6 +11,9 @@ var Exception = map[int]string{
 	105 : "update user failed",
 	106 : "token expire",
 	107 : "token illegal",
+	108 : "inner error",
+	109 : "get user open id failed",
+	110 : "param required",
 }
 
 var Success   = map[int]string{
@@ -40,7 +43,7 @@ func PrintException(ctx *gin.Context,code int,msg string,data interface{}) {
 	}
 
 	result := map[string]interface{}{
-		"status" : true,
+		"status" : false,
 		"msg"    : msg,
 		"code"   : code,
 		"data"   : data,

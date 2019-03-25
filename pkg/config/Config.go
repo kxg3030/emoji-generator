@@ -26,12 +26,14 @@ var Extension = []string{
 }
 
 var Config = map[string]interface{}{
-	"ListenPort" : ":8080",
-	"DebugMode"  : true,
-	"MiddleWare" : []middleware.MiddlewareInterface{
-		middleware.NewRouterMiddleware(),
+	"ListenPort"       : ":8080",
+	"DebugMode"        : true,
+	"GlobalMiddleWare" : []middleware.MiddlewareInterface{
 		middleware.NewCrossSiteMiddleware(),
 		middleware.NewRecoverMiddleware(),
+	},
+	"LocalMiddleWare"  : []middleware.MiddlewareInterface{
+		middleware.NewRouterMiddleware(),
 	},
 }
 

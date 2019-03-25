@@ -19,7 +19,7 @@ func NewRouterMiddleware()*RouterMiddleware  {
 
 func (this *RouterMiddleware)Render() gin.HandlerFunc  {
 	return func(context *gin.Context) {
-		token,err := request.ParseFromRequest(context.Request,request.AuthorizationHeaderExtractor, func(token *jwt.Token) (i interface{}, e error) {
+		token,err := request.ParseFromRequest(context.Request,request.AuthorizationHeaderExtractor, func(token *jwt.Token) (i interface{}, err error) {
 			return []byte("emoji"),nil
 		})
 		if err == nil {
