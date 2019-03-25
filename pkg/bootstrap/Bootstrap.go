@@ -31,10 +31,10 @@ func NewBootstrap(framework *gin.Engine)*Bootstrap  {
 
 func (this *Bootstrap)Init()*Bootstrap  {
 	this.initLoggerFramework()
+	this.setAssetsPath()
 	this.setMiddleware()
 	this.initFrameworkRouter()
 	this.setDebugMode()
-	this.setAssetsPath()
 	this.initEnv()
 	this.initTask()
 	this.setOrm()
