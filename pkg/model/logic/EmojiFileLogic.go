@@ -57,3 +57,10 @@ func (this *EmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 str
 	unity.ErrorCheck(err)
 	return true
 }
+
+// select record
+func (this *EmojiFileLogic)SelectSysFileList(filed string)[]map[string]interface{}  {
+	result,err := this.Orm.Table("sys_emoji_file").Fields(filed).Get()
+	unity.ErrorCheck(err)
+	return result
+}

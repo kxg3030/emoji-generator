@@ -1,10 +1,14 @@
 package unity
 
 import (
+	"bytes"
 	"crypto/md5"
 	"emoji/pkg/logger"
 	"errors"
 	"fmt"
+	"github.com/dgrijalva/jwt-go"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"reflect"
 	"time"
@@ -83,4 +87,43 @@ func DynamicProxyCall(object interface{},method string,args ...interface{})[]ref
 
 func GetEnvVal(key string)string  {
 	return os.Getenv(key)
+}
+
+func HttpPost(url string,data string)string  {
+	client   := &http.Client{}
+	postData := bytes.NewBuffer([]byte(data))
+	request,_:= http.NewRequest("POST",url,postData)
+	request.Header.Set("Content-type", "application/json")
+	response,_ := client.Do(request)
+	if response.StatusCode == 200 {
+		body,_ := ioutil.ReadAll(response.Body)
+		return string(body)
+	}
+	return ""
+}
+
+func HttpGet(url string) []byte  {
+	client     := &http.Client{}
+	request, _ := http.NewRequest("GET", url, nil)
+	request.Header.Set("Connection", "keep-alive")
+	response, _:= client.Do(request)
+	if response.StatusCode == 200 {
+		body, _:= ioutil.ReadAll(response.Body)
+		return body
+	}
+	return []byte("")
+}
+
+func GetToken(key string,val string) string  {
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := make(jwt.MapClaims)
+	claims["exp"] = time.Now().Add(time.Hour * time.Duration(1)).Unix()
+	claims["iat"] = time.Now().Unix()
+	claims[key]   = val
+	token.Claims  = claims
+	tokenString, err := token.SignedString([]byte("emoji"))
+	if err != nil {
+		return ""
+	}
+	return tokenString
 }

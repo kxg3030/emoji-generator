@@ -20,18 +20,18 @@ import (
 	"time"
 )
 
-type Emoji struct {
+type EmojiFile struct {
 
 }
 
-func NewEmoji()*Emoji  {
-	return &Emoji{
+func NewEmoji()*EmojiFile  {
+	return &EmojiFile{
 
 	}
 }
 
 // upload file
-func (this *Emoji)UploadFile(ctx *gin.Context)  {
+func (this *EmojiFile)UploadFile(ctx *gin.Context)  {
 	var emojiFile entity.EmojiFile
 	filePtr,header,err := ctx.Request.FormFile("file")
 	unity.ErrorCheck(err)
@@ -93,7 +93,7 @@ func (this *Emoji)UploadFile(ctx *gin.Context)  {
 }
 
 // async convert mp4 to gif
-func (this *Emoji)GeneratorGifFromVideo(ctx *gin.Context)  {
+func (this *EmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 	var emoji entity.EmojiFile
 	code := ctx.Param("code")
 	emoji = entity.EmojiFile{
@@ -143,7 +143,7 @@ func (this *Emoji)GeneratorGifFromVideo(ctx *gin.Context)  {
 }
 
 // async convert mp4 to png
-func (this Emoji)GeneratorCoverFromVideo(sysFilePath string,sysFileName string,saveFilePath string,code string)bool  {
+func (this EmojiFile)GeneratorCoverFromVideo(sysFilePath string,sysFileName string,saveFilePath string,code string)bool  {
 	var command =  &exec.Cmd{}
 	command = exec.Command("ffmpeg","-y",
 		"-i", sysFilePath, "-vframes", "1", "-ss", "0:0:0", "-an",

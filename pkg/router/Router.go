@@ -18,16 +18,16 @@ func NewRouter(frameworkRouter *gin.Engine)*Router  {
 
 // register router
 func (this *Router)RegisterRouter()*gin.Engine  {
-	emojiIndex := index.NewEmoji()
-	emojiAdmin := admin.NewEmoji()
 	groupIndex := this.Router.Group("/api/v1")
 	{
-		groupIndex.GET("/user", emojiIndex.EmojiGenerator)
+		groupIndex.GET("/user"      ,index.NewEmoji().EmojiGenerator)
+		groupIndex.GET("/emoji/list",index.NewEmojiFile().GetEmojiFileList)
+		groupIndex.GET("/emoji/login",index.NewUserList().Login)
 	}
 	groupAdmin := this.Router.Group("/api/emoji")
 	{
-		groupAdmin.POST("/upload"   ,emojiAdmin.UploadFile)
-		groupAdmin.GET("/generator/:code",emojiAdmin.GeneratorGifFromVideo)
+		groupAdmin.POST("/upload"        ,admin.NewEmoji().UploadFile)
+		groupAdmin.GET("/generator/:code",admin.NewEmoji().GeneratorGifFromVideo)
 	}
 	return  this.Router
 }
