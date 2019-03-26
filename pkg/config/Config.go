@@ -27,13 +27,18 @@ var Extension = []string{
 
 var Config = map[string]interface{}{
 	"ListenPort"       : ":8080",
-	"DebugMode"        : true,
+	"DebugMode"        : false,
 	"GlobalMiddleWare" : []middleware.MiddlewareInterface{
 		middleware.NewCrossSiteMiddleware(),
 		middleware.NewRecoverMiddleware(),
 	},
-	"LocalMiddleWare"  : []middleware.MiddlewareInterface{
-		middleware.NewRouterMiddleware(),
+	"LocalMiddleWare"  : map[string][]middleware.MiddlewareInterface{
+		"index":[]middleware.MiddlewareInterface{
+			middleware.NewRouterMiddleware(),
+		},
+		"admin":[]middleware.MiddlewareInterface{
+			middleware.NewSignatureMiddleware(),
+		},
 	},
 }
 

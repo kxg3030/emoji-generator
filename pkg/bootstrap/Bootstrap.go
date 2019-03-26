@@ -32,9 +32,9 @@ func NewBootstrap(framework *gin.Engine)*Bootstrap  {
 func (this *Bootstrap)Init()*Bootstrap  {
 	this.initLoggerFramework()
 	this.setGlobalMiddleware()
+	this.setDebugMode()
 	this.setAssetsPath()
 	this.initFrameworkRouter()
-	this.setDebugMode()
 	this.initEnv()
 	this.initTask()
 	this.setOrm()
@@ -53,7 +53,9 @@ func (this *Bootstrap)initFrameworkRouter()*Bootstrap  {
 func (this *Bootstrap)setDebugMode()  {
 	debugMode := config.Config["DebugMode"].(bool)
 	if debugMode{
-		this.Framework.Use(gin.Logger())
+		gin.SetMode("debug")
+	}else{
+		gin.SetMode("release")
 	}
 }
 

@@ -23,7 +23,7 @@ func (this *Router)RegisterRouter()*gin.Engine  {
 
 	groupIndex := this.Router.Group("/api/v1")
 	groupIndex.GET("/user/login",index.NewUserList().Login)
-	this.RegisterMiddleWare(groupIndex)
+	this.RegisterIndexMiddleWare(groupIndex)
 	{
 		groupIndex.GET("/user"       ,index.NewEmoji().EmojiGenerator)
 		groupIndex.GET("/emoji/list" ,index.NewEmojiFile().GetEmojiFileList)
@@ -37,10 +37,20 @@ func (this *Router)RegisterRouter()*gin.Engine  {
 	return  this.Router
 }
 
-func (this *Router)RegisterMiddleWare(group *gin.RouterGroup)*gin.RouterGroup  {
-	middlewareHandle,ok := config.Config["LocalMiddleWare"].([]middleware.MiddlewareInterface)
+func (this *Router)RegisterIndexMiddleWare(group *gin.RouterGroup)*gin.RouterGroup  {
+	middlewareHandle,ok := config.Config["LocalMiddleWare"].(map[string][]middleware.MiddlewareInterface)
 	if ok{
-		for _,val := range middlewareHandle{
+		for _,val := range middlewareHandle["index"]{
+			group.Use(val.Render())
+		}
+	}
+	return group
+}
+
+func (this *Router)RegisterAdminMiddleWare(group *gin.RouterGroup)*gin.RouterGroup  {
+	middlewareHandle,ok := config.Config["LocalMiddleWare"].(map[string][]middleware.MiddlewareInterface)
+	if ok{
+		for _,val := range middlewareHandle["admin"]{
 			group.Use(val.Render())
 		}
 	}

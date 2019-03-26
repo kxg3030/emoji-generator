@@ -14,6 +14,7 @@ var Exception = map[int]string{
 	108 : "inner error",
 	109 : "get user open id failed",
 	110 : "param required",
+	111 : "signature illegal",
 }
 
 var Success   = map[int]string{
