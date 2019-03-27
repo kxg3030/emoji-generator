@@ -20,10 +20,9 @@ RUN apt-get update \
 		openssh-server \
     && apt-get clean \
     && apt-get autoremove
-RUN export GO111MODULE=on && export GOPROXY=https://goproxy.io && source /etc/profile
+RUN export GO111MODULE=on && export GOPROXY=https://goproxy.io
 RUN rm -f .env \
    && \cp .env.${ACTION} .env \
    && go mod download \
-   && chmod +x ./main
 
 CMD ["go", "run", "Index.go"]

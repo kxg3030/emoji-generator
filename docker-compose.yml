@@ -1,7 +1,9 @@
 version: "2"
 services:
   go:
-    build: "."
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
       - 9527:9527
     container_name: go
