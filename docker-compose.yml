@@ -4,7 +4,7 @@ services:
     build: "."
     ports:
       - 9527:9527
-    container_name: "emoji"
+    container_name: emoji
     depends_on:
       - mysql
     networks:
