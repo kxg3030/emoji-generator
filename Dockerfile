@@ -2,7 +2,6 @@ FROM golang
 MAINTAINER "kxg3030@sina.com"
 WORKDIR /home/emoji
 ENV ACTION pro
-COPY . .
-RUN export GO111MODULE=on && export GOPROXY=https://goproxy.io
+COPY main .
 RUN rm -f .env && \cp .env.${ACTION} .env
-CMD ["./main"]
+ENTRYPOINT ["./main"]
