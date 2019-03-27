@@ -24,3 +24,5 @@ services:
       - TZ=Asia/Shanghai
 networks:
   emoji:
+    name: emoji
+    driver: bridge
