@@ -4,7 +4,8 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3 // indirect
 	github.com/gin-gonic/gin v1.3.0
-	github.com/gohouse/gorose v1.0.4
+	github.com/gohouse/converter v0.0.3 // indirect
+	github.com/gohouse/gorose v1.0.5
 	github.com/golang/protobuf v1.3.0 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/json-iterator/go v1.1.6 // indirect
