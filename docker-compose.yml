@@ -6,7 +6,7 @@ services:
       - 9527:9527
     container_name: go
     depends_on:
-      - emoji-mysql
+      - mysql
     networks:
       - emoji
   mysql:
