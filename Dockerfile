@@ -4,5 +4,5 @@ WORKDIR /home/emoji
 ENV ACTION pro
 COPY . .
 RUN export GO111MODULE=on && export GOPROXY=https://goproxy.io && source /etc/profile
-RUN rm -f .env && \cp .env.${ACTION} .env && chmod +x main
+RUN rm -f .env && \cp .env.${ACTION} .env && go build -o main Index.go && chmod +x ./main
 CMD ["./main"]

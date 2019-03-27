@@ -8,6 +8,7 @@ import (
 	"emoji/pkg/router"
 	"emoji/pkg/task"
 	"emoji/pkg/unity"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gohouse/gorose"
 	"github.com/joho/godotenv"
@@ -73,6 +74,7 @@ func (this *Bootstrap)setAssetsPath()  {
 func (this *Bootstrap)setOrm()  {
 	var err error
 	config.Database.Dsn   = unity.GetEnvVal("mysql")
+	fmt.Println(unity.GetEnvVal("mysql"));
 	database.Database,err = gorose.Open(config.Database)
 	unity.ErrorCheck(err)
 }
