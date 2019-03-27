@@ -24,7 +24,8 @@ func (this *SignatureMiddleware)Render()gin.HandlerFunc  {
 		signature := html.EscapeString(context.Query("signature"))
 		if unity.Md5String(timestamp + key) == signature{
 			context.Next()
+		}else{
+			context.AbortWithStatusJSON(200,system.GetExceptionMessage(111))
 		}
-		context.AbortWithStatusJSON(200,system.GetExceptionMessage(111))
 	}
 }

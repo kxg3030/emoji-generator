@@ -3,7 +3,6 @@ package unity
 import (
 	"bytes"
 	"crypto/md5"
-	"emoji/pkg/logger"
 	"errors"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
@@ -16,7 +15,6 @@ import (
 
 func ErrorCheck(err error)  {
 	if err != nil {
-		logger.Logger.Error(err.Error())
 		panic(err.Error())
 	}
 }
@@ -49,15 +47,20 @@ func DirMakeAll(dir string) bool  {
 	return true
 }
 
-func FileMake(fileName string)  {
+func FileMake(fileName string)bool  {
 	_,err := os.Open(fileName)
-	if err != nil && os.IsNotExist(err){
+	if os.IsNotExist(err){
 		fi,err := os.Create(fileName)
 		ErrorCheck(err)
 		defer func() {
 			ErrorCheck(fi.Close())
 		}()
+		return  true
 	}
+	if err != nil {
+		return false
+	}
+	return true
 }
 
 func FileMakeGetPtr(fileName string)*os.File  {

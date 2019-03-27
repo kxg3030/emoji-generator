@@ -22,17 +22,23 @@ func NewRouter(frameworkRouter *gin.Engine)*Router  {
 func (this *Router)RegisterRouter()*gin.Engine  {
 
 	groupIndex := this.Router.Group("/api/v1")
+	// 用户登陆
 	groupIndex.GET("/user/login",index.NewUserList().Login)
 	this.RegisterIndexMiddleWare(groupIndex)
 	{
-		groupIndex.GET("/user"       ,index.NewEmoji().EmojiGenerator)
-		groupIndex.GET("/emoji/list" ,index.NewEmojiFile().GetEmojiFileList)
+		// 用户创建GIF
+		groupIndex.POST("/emoji/create",index.NewUserEmojiFile().EmojiGenerator)
+		// 获取封面列表
+		groupIndex.GET("/emoji/list" ,index.NewSysEmojiFile().GetEmojiFileList)
 	}
 
 	groupAdmin := this.Router.Group("/api/emoji")
+	this.RegisterAdminMiddleWare(groupAdmin)
 	{
-		groupAdmin.POST("/upload"        ,admin.NewEmoji().UploadFile)
-		groupAdmin.GET("/generator/:code",admin.NewEmoji().GeneratorGifFromVideo)
+		// 后台上传文件
+		groupAdmin.POST("/upload"        ,admin.NewSysEmojiFile().UploadFile)
+		// 生成封面图和GIF
+		groupAdmin.GET("/generator/:encode",admin.NewSysEmojiFile().GeneratorGifFromVideo)
 	}
 	return  this.Router
 }

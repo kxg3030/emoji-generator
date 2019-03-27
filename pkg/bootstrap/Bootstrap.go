@@ -53,9 +53,7 @@ func (this *Bootstrap)initFrameworkRouter()*Bootstrap  {
 func (this *Bootstrap)setDebugMode()  {
 	debugMode := config.Config["DebugMode"].(bool)
 	if debugMode{
-		gin.SetMode("debug")
-	}else{
-		gin.SetMode("release")
+		this.Framework.Use(gin.Logger())
 	}
 }
 

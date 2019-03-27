@@ -6,18 +6,18 @@ import (
 	"github.com/gohouse/gorose"
 )
 
-type EmojiFileLogic struct {
+type SysEmojiFileLogic struct {
 	Orm  *gorose.Session
 }
 
-func NewEmojiFileLogic(orm *gorose.Session)*EmojiFileLogic  {
-	return &EmojiFileLogic{
+func NewSysEmojiFileLogic(orm *gorose.Session)*SysEmojiFileLogic  {
+	return &SysEmojiFileLogic{
 		Orm : orm,
 	}
 }
 
 // insert new record
-func (this *EmojiFileLogic) InsertNewFileRecord(emoji entity.EmojiFile) bool  {
+func (this *SysEmojiFileLogic) InsertNewFileRecord(emoji entity.EmojiFile) bool  {
 	result ,err  := this.Orm.Table("sys_emoji_file").Where(map[string]interface{}{
 		"md5_encode"  : emoji.Md5Encode,
 		"extension"   : emoji.Extension,
@@ -40,7 +40,7 @@ func (this *EmojiFileLogic) InsertNewFileRecord(emoji entity.EmojiFile) bool  {
 }
 
 // get sys file from database
-func (this *EmojiFileLogic)GetSysFileList(emoji entity.EmojiFile)[]map[string]interface{}  {
+func (this *SysEmojiFileLogic)GetSysFileList(emoji entity.EmojiFile)[]map[string]interface{}  {
 	result,err := this.Orm.Table("sys_emoji_file").Where(map[string]interface{}{
 		"md5_encode" : emoji.Md5Encode,
 	}).Fields("path,base_path,extension,name").Get()
@@ -48,8 +48,18 @@ func (this *EmojiFileLogic)GetSysFileList(emoji entity.EmojiFile)[]map[string]in
 	return result
 }
 
+// get sys file from database
+func (this *SysEmojiFileLogic)GetSysFileListFirst(emoji entity.EmojiFile)map[string]interface{}  {
+	result,err := this.Orm.Table("sys_emoji_file").Where(map[string]interface{}{
+		"md5_encode" : emoji.Md5Encode,
+		"extension"  : ".mp4",
+	}).Fields("path,base_path,extension,name").First()
+	unity.ErrorCheck(err)
+	return result
+}
+
 // update database column
-func (this *EmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 string)bool  {
+func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 string)bool  {
 	_,err := this.Orm.Table("sys_emoji_file").Where("md5_encode",md5).Data(map[string]interface{}{
 		"image_url" : url,
 		"cover_url" : cover,
@@ -59,8 +69,8 @@ func (this *EmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 str
 }
 
 // select record
-func (this *EmojiFileLogic)SelectSysFileList(filed string)[]map[string]interface{}  {
-	result,err := this.Orm.Table("sys_emoji_file").Fields(filed).Get()
+func (this *SysEmojiFileLogic)SelectSysFileList(filed string)[]map[string]interface{}  {
+	result,err := this.Orm.Table("sys_emoji_file").Where("extension",".mp4").Fields(filed).Get()
 	unity.ErrorCheck(err)
 	return result
 }

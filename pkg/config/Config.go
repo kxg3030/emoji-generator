@@ -33,10 +33,10 @@ var Config = map[string]interface{}{
 		middleware.NewRecoverMiddleware(),
 	},
 	"LocalMiddleWare"  : map[string][]middleware.MiddlewareInterface{
-		"index":[]middleware.MiddlewareInterface{
+		"index":{
 			middleware.NewRouterMiddleware(),
 		},
-		"admin":[]middleware.MiddlewareInterface{
+		"admin":{
 			middleware.NewSignatureMiddleware(),
 		},
 	},
