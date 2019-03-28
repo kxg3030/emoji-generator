@@ -34,6 +34,7 @@ func (this *SysEmojiFileLogic) InsertNewFileRecord(emoji entity.EmojiFile) bool 
 		"base_path"   : emoji.BasePath,
 		"sentence"    : emoji.Sentence,
 		"image_url"   : emoji.ImageUrl,
+		"cover_url"   : emoji.CoverUrl,
 		"sentence_count"    : emoji.SentenceCount,
 	}).InsertGetId()
 	unity.ErrorCheck(err)
