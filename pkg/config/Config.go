@@ -26,7 +26,7 @@ var Extension = []string{
 }
 
 var Config = map[string]interface{}{
-	"ListenPort"       : ":9527",
+	"ListenPort"       : "0.0.0.0:9527",
 	"DebugMode"        : true,
 	"GlobalMiddleWare" : []middleware.MiddlewareInterface{
 		middleware.NewCrossSiteMiddleware(),
