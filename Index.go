@@ -7,6 +7,6 @@ import (
 
 func main()  {
 	engine := bootstrap.NewBootstrap(gin.New()).Init()
-	engine.Run(":8080")
+	engine.Run(":9527")
 }
 
