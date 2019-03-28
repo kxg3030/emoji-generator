@@ -19,7 +19,7 @@ func (this *SslMiddleware)Render()gin.HandlerFunc  {
 	return func(context *gin.Context) {
 		secureMiddleware := secure.New(secure.Options{
 			SSLRedirect: true,
-			SSLHost    : "127.0.0.1:9527",
+			SSLHost    : "0.0.0.0:9527",
 		})
 		err := secureMiddleware.Process(context.Writer, context.Request)
 		if err != nil {
