@@ -46,8 +46,8 @@ var Config = map[string]interface{}{
 var Database = &gorose.DbConfigSingle{
 	Driver:          "mysql",
 	EnableQueryLog:  true,
-	SetMaxOpenConns: 0,
-	SetMaxIdleConns: 0,
+	SetMaxOpenConns: 10,
+	SetMaxIdleConns: 1,
 	Prefix:          "xm_",
 	Dsn:             "",
 }
