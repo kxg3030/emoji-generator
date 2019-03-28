@@ -5,6 +5,7 @@ ENV FFMPEG 4.1
 # Libs
 RUN apt-get update \
     && apt-get install -y \
+         tar \
         curl \
         wget \
         git \
