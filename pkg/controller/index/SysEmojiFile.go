@@ -20,5 +20,9 @@ func NewSysEmojiFile() *SysEmojiFile  {
 func (this *SysEmojiFile)GetEmojiFileList(ctx *gin.Context)  {
 	filed := "id,name,cover_url,md5_encode"
 	result := logic.NewSysEmojiFileLogic(database.GetOrm()).SelectSysFileList(filed)
-	system.PrintSuccess(ctx,203,"",result)
+	if len(result) != 0 {
+		system.PrintSuccess(ctx,203,"",result)
+		return
+	}
+	system.PrintException(ctx,117,"",result)
 }

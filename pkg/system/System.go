@@ -20,6 +20,7 @@ var Exception = map[int]string{
 	114 : "sentence count cant not match ass",
 	115 : ".ass file not exist",
 	116 : ".mp4 file not exist",
+	117 : "empty",
 }
 
 var Success   = map[int]string{
