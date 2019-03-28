@@ -24,7 +24,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - "/home/www/emoji/mysql:/var/lib/mysql"
-      - "./src : /var/lib/mysql/src"
+      - "./src : /var/lib/src"
 networks:
   emoji:
     driver: bridge
