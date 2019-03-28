@@ -24,6 +24,7 @@ type Bootstrap struct {
 
 
 func NewBootstrap(framework *gin.Engine)*Bootstrap  {
+
 	return &Bootstrap{
 		Framework:framework,
 	}
@@ -36,7 +37,6 @@ func (this *Bootstrap)Init()*Bootstrap  {
 	this.setAssetsPath()
 	this.initFrameworkRouter()
 	this.initEnv()
-	this.initTask()
 	this.setOrm()
 	return this
 }
