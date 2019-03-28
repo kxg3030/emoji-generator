@@ -9,7 +9,7 @@ import (
 func main()  {
 	setRunMode()
 	engine := bootstrap.NewBootstrap(gin.New()).Init()
-	engine.Run(":9527")
+	engine.Run(":9527",true)
 }
 
 func setRunMode()  {

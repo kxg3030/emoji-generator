@@ -41,7 +41,12 @@ func (this *Bootstrap)Init()*Bootstrap  {
 	return this
 }
 
-func (this *Bootstrap)Run(port string)  {
+func (this *Bootstrap)Run(port string,tls bool)  {
+	if(tls){
+		certFile := config.CertFile
+		keyFile  := config.KeyFile
+		unity.ErrorCheck(this.Framework.RunTLS(port,certFile,keyFile))
+	}
 	unity.ErrorCheck(this.Framework.Run(port))
 }
 

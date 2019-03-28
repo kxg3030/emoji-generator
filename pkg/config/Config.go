@@ -31,6 +31,7 @@ var Config = map[string]interface{}{
 	"GlobalMiddleWare" : []middleware.MiddlewareInterface{
 		middleware.NewCrossSiteMiddleware(),
 		middleware.NewRecoverMiddleware(),
+		middleware.NewSslMiddleware(),
 	},
 	"LocalMiddleWare"  : map[string][]middleware.MiddlewareInterface{
 		"index":{
@@ -50,3 +51,8 @@ var Database = &gorose.DbConfigSingle{
 	Prefix:          "xm_",
 	Dsn:             "",
 }
+
+var (
+	CertFile = "./emoji.pem"
+	KeyFile  = "./emoji.key"
+)
