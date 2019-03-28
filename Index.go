@@ -7,6 +7,7 @@ import (
 )
 
 func main()  {
+	//fmt.Println(unity.GetToken("openId","zt"))
 	setRunMode()
 	engine := bootstrap.NewBootstrap(gin.New()).Init()
 	engine.Run(true)

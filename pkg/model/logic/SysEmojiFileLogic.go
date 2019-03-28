@@ -72,5 +72,8 @@ func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 
 func (this *SysEmojiFileLogic)SelectSysFileList(filed string)[]map[string]interface{}  {
 	result,err := this.Orm.Table("sys_emoji_file").Where("extension",".mp4").Fields(filed).Get()
 	unity.ErrorCheck(err)
+	if len(result) == 0{
+		return []map[string]interface{}{}
+	}
 	return result
 }
