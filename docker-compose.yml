@@ -20,8 +20,10 @@ services:
     networks:
       - emoji
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=zt147258369
       - TZ=Asia/Shanghai
+    volumes:
+      - /home/www/emoji/mysql:/var/lib/mysql
 networks:
   emoji:
     driver: bridge

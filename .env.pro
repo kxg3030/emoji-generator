@@ -1,1 +1,1 @@
-mysql=root:root@tcp(mysql:3306)/xm_emoji?charset=utf8
+mysql=root:zt147258369@tcp(mysql:3306)/xm_emoji?charset=utf8
