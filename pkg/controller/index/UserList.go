@@ -31,7 +31,7 @@ func (this *UserList)Login(ctx *gin.Context)  {
 		userInfoFromWeChat:= service.NewWeChat().GetUserOpenId(code)
 		if len(userInfoFromWeChat.OpenId) > 0{
 			result:= logic.NewUserListLogic(database.GetOrm()).FindUserRecord(userInfoFromWeChat.OpenId);
-			ctx.Writer.Header().Set("token",unity.GetToken("openId",userInfoFromWeChat.OpenId))
+			ctx.Writer.Header().Set("authorization",unity.GetToken("openId",userInfoFromWeChat.OpenId))
 			if len(result) != 0{
 				go func() {
 					logic.NewUserListLogic(database.GetOrm()).UpdateUserColumn(userInfoFromWeChat.OpenId,userList)

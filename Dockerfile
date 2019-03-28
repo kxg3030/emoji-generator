@@ -18,11 +18,11 @@ RUN apt-get update \
     && apt-get clean \
     && apt-get autoremove
 
-RUN wget https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 -O ./ffmpeg.tar.bz2 \
-    && mkdir -p ./ffmpeg \
-    && tar -jxvf ffmpeg.tar.bz2 -C ./ffmpeg \
-    && rm ./ffmpeg.tar.bz2 \
-    && cd ./ffmpeg \
+RUN wget https://ffmpeg.org/releases/ffmpeg-${FFMPEG}.tar.bz2 -O ffmpeg.tar.bz2 \
+    && mkdir -p ffmpeg \
+    && tar -jxvf ffmpeg.tar.bz2 -C ffmpeg \
+    && rm ffmpeg.tar.bz2 \
+    && cd ffmpeg \
     && ./configure \
     && make && make install
 
