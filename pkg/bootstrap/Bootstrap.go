@@ -41,7 +41,8 @@ func (this *Bootstrap)Init()*Bootstrap  {
 	return this
 }
 
-func (this *Bootstrap)Run(port string,tls bool)  {
+func (this *Bootstrap)Run(tls bool)  {
+	port     := config.Config["ListenPort"].(string)
 	if(tls){
 		certFile := config.CertFile
 		keyFile  := config.KeyFile
