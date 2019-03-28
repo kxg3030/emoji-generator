@@ -23,8 +23,8 @@ services:
       - MYSQL_ROOT_PASSWORD=zt147258369
       - TZ=Asia/Shanghai
     volumes:
-      - /home/www/emoji/mysql:/var/lib/mysql
-      - ./xm_emoji.sql : ./xm_emoji.sql
+      - "/home/www/emoji/mysql:/var/lib/mysql"
+      - "./xm_emoji.sql : ./xm_emoji.sql"
 networks:
   emoji:
     driver: bridge
