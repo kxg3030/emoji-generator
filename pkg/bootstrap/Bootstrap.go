@@ -110,20 +110,18 @@ func (this *Bootstrap)initLoggerFramework()  {
 	}
 	// 设置日志级别
 	atomicLevel := zap.NewAtomicLevel()
-	atomicLevel.SetLevel(zap.InfoLevel)
+	atomicLevel.SetLevel(zap.ErrorLevel)
 	core := zapcore.NewCore(
 		zapcore.NewJSONEncoder(encoderConfig),                    // 编码器配置
 		zapcore.NewMultiWriteSyncer(zapcore.AddSync(&hook)),      // 打印到控制台和文件
 		atomicLevel,                                              // 日志级别
 	)
-	// 开启开发模式，堆栈跟踪
-	caller := zap.AddCaller()
 	// 开启文件及行号
-	development := zap.Development()
+	caller := zap.AddCaller()
 	// 设置初始化字段
 	filed := zap.Fields(zap.String("serviceName", "emoji"))
 	// 构造日志
-	logger.Logger = zap.New(core, caller, development, filed)
+	logger.Logger = zap.New(core, caller, filed)
 }
 
 func (this Bootstrap)initTask()  {
