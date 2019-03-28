@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"emoji/pkg/system"
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
 )
@@ -23,6 +24,7 @@ func (this *SslMiddleware)Render()gin.HandlerFunc  {
 		})
 		err := secureMiddleware.Process(context.Writer, context.Request)
 		if err != nil {
+			context.AbortWithStatusJSON(200,system.GetExceptionMessage(118))
 			return
 		}
 		context.Next()
