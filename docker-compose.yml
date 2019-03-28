@@ -7,6 +7,8 @@ services:
     ports:
       - 9527:9527
     container_name: go
+    environment:
+      - TZ=Asia/Shanghai
     depends_on:
       - mysql
     networks:

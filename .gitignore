@@ -1,4 +1,4 @@
 /pkg/assets/*
 /pkg/template/*
-.env
+*.env
 /pkg/logger/2019/*
