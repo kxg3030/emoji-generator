@@ -5,7 +5,7 @@ import "github.com/gin-gonic/gin"
 var Exception = map[int]string{
 	100 : "upload file ext is not support",
 	101 : "upload file failed",
-	102 : "insert record to database failed",
+	102 : "upload and override success",
 	103 : "audio  file count not equal two,can not convert to gif",
 	104 : "update url failed",
 	105 : "update user failed",
