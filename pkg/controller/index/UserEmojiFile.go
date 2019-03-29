@@ -109,7 +109,6 @@ func (this *UserEmojiFile)ExecuteCommand() (bool) {
 	usrAssFile  := this.userAssFilePath
 	usrSavePath := pkgPrefix  + this.userFileSave + gifSuffix
 	command      = exec.Command("ffmpeg","-y","-i",sysFilePath,"-vf",fmt.Sprintf("ass=%s",usrAssFile),usrSavePath)
-	fmt.Println(command.Args)
 	if _,err := command.CombinedOutput();err != nil{
 		unity.ErrorCheck(err)
 	}
