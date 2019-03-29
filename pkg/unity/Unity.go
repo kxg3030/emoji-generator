@@ -120,7 +120,7 @@ func HttpGet(url string) []byte  {
 func GetToken(key string,val string) string  {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := make(jwt.MapClaims)
-	claims["exp"] = time.Now().Add(time.Hour * time.Duration(720)).Unix()
+	claims["exp"] = time.Now().Add(time.Hour * 240).Unix()
 	claims["iat"] = time.Now().Unix()
 	claims[key]   = val
 	token.Claims  = claims

@@ -5,6 +5,7 @@ import (
 	"emoji/pkg/controller/admin"
 	"emoji/pkg/controller/index"
 	"emoji/pkg/middleware"
+	"emoji/pkg/system"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,7 @@ func NewRouter(frameworkRouter *gin.Engine)*Router  {
 
 // register router
 func (this *Router)RegisterRouter()*gin.Engine  {
-
+	this.Router.NoRoute(this.RegisterNotFound())
 	groupIndex := this.Router.Group("/api/v1")
 	// 用户登陆
 	groupIndex.GET("/user/login",index.NewUserList().Login)
@@ -61,4 +62,10 @@ func (this *Router)RegisterAdminMiddleWare(group *gin.RouterGroup)*gin.RouterGro
 		}
 	}
 	return group
+}
+
+func (this *Router)RegisterNotFound()gin.HandlerFunc  {
+	return func(context *gin.Context) {
+		context.AbortWithStatusJSON(404,system.GetExceptionMessage(119))
+	}
 }

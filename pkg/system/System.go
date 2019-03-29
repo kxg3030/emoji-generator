@@ -22,6 +22,7 @@ var Exception = map[int]string{
 	116 : ".mp4 file not exist",
 	117 : "data is empty",
 	118 : "ssl error",
+	119 : "404 not found",
 }
 
 var Success   = map[int]string{
