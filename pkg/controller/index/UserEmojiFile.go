@@ -60,7 +60,7 @@ func (this *UserEmojiFile) EmojiGenerator(ctx *gin.Context){
 			}
 			return
 		}
-		system.PrintException(ctx,113,"",map[string]interface{}{})
+		system.PrintException(ctx,401,"",map[string]interface{}{})
 		return
 	}
 	system.PrintException(ctx,112,"",map[string]interface{}{})

@@ -16,7 +16,7 @@ var Exception = map[int]string{
 	110 : "参数不足",
 	111 : "签名验证失败",
 	112 : "文件不存在",
-	113 : "请重新登陆",
+	401 : "请重新登陆",
 	114 : "自定义语句数错误",
 	115 : "模板文件不存在",
 	116 : "媒体文件不存在",
@@ -43,7 +43,7 @@ func  PrintSuccess(ctx *gin.Context,code int,msg string,data interface{}) {
 	result := map[string]interface{}{
 		"status" : true,
 		"msg"    : msg,
-		"code"   : code,
+		"code"   : 200,
 		"data"   : data,
 	}
 	ctx.JSON(200,result)
