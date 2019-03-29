@@ -21,7 +21,7 @@ func (this *RecoverMiddleware)Render()gin.HandlerFunc  {
 		defer func() {
 			if err := recover(); err != nil {
 				logger.Logger.Error(err.(string))
-				context.JSON(500,system.GetExceptionMessage(108))
+				context.AbortWithStatusJSON(500,system.GetExceptionMessage(108))
 				return
 			}
 		}()
