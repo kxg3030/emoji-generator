@@ -45,7 +45,7 @@ func (this *SysEmojiFileLogic) InsertNewFileRecord(emoji entity.EmojiFile) bool 
 func (this *SysEmojiFileLogic)GetSysFileList(emoji entity.EmojiFile)[]map[string]interface{}  {
 	result,err := this.Orm.Table("sys_emoji_file").Where(map[string]interface{}{
 		"md5_encode" : emoji.Md5Encode,
-	}).Fields("path,base_path,extension,name").Get()
+	}).Fields("path,base_path,extension,name,sentence_count").Get()
 	unity.ErrorCheck(err)
 	return result
 }
@@ -61,10 +61,11 @@ func (this *SysEmojiFileLogic)GetSysFileListFirst(emoji entity.EmojiFile)map[str
 }
 
 // update database column
-func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 string)bool  {
+func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 string,count int)bool  {
 	_,err := this.Orm.Table("sys_emoji_file").Where("md5_encode",md5).Data(map[string]interface{}{
 		"image_url" : url,
 		"cover_url" : cover,
+		"sentence_count" : count,
 	}).Update()
 	unity.ErrorCheck(err)
 	return true
