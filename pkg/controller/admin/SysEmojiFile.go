@@ -139,6 +139,9 @@ func (this *SysEmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 		imageUrl   := ctx.Request.Host   + "/assets/system/" + sysFileName + gifExt
 		coverUrl   := ctx.Request.Host   + "/assets/system/" + sysFileName + pngExt
 		coverSave  := config.ASSETS_PATH + "system/" + sysFileName + pngExt
+		if unity.DirExistValidate(config.ASSETS_PATH + "system/") == false{
+			unity.DirMakeAll(config.ASSETS_PATH + "system/")
+		}
 		if unity.DirExistValidate(sysAssFile) == false{
 			system.PrintException(ctx,115,"",map[string]interface{}{})
 			return
