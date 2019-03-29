@@ -92,10 +92,11 @@ func (this *UserEmojiFile)AnalysisAss(fileName string,sentence string,userId str
 	if unity.DirExistValidate(pkgPrefix + userNewFile) == false{
 		unity.DirMakeAll(pkgPrefix + userNewFile)
 	}
+	userNewFile    = pkgPrefix + userNewFile
 	userNewFile    += unity.Md5String(this.userUniqueId + unity.GetNowDateTime(config.HourFormat))
 	userNewFile    += config.ASS_FILE_EXT
 	unity.FileMake(userNewFile)
-	err = ioutil.WriteFile(pkgPrefix + userNewFile,[]byte(fileNewStr),os.ModePerm)
+	err = ioutil.WriteFile(userNewFile,[]byte(fileNewStr),os.ModePerm)
 	unity.ErrorCheck(err)
 	return userNewFile
 }
@@ -105,9 +106,10 @@ func (this *UserEmojiFile)ExecuteCommand() (bool) {
 	pkgPrefix   := "./pkg"
 	gifSuffix   := ".gif"
 	sysFilePath := this.sysFilePath
-	usrAssFile  := pkgPrefix  + this.userAssFilePath
+	usrAssFile  := this.userAssFilePath
 	usrSavePath := pkgPrefix  + this.userFileSave + gifSuffix
 	command      = exec.Command("ffmpeg","-y","-i",sysFilePath,"-vf",fmt.Sprintf("ass=%s",usrAssFile),usrSavePath)
+	fmt.Println(command.Args)
 	if _,err := command.CombinedOutput();err != nil{
 		unity.ErrorCheck(err)
 	}
