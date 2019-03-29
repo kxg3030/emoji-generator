@@ -61,7 +61,7 @@ func (this *SysEmojiFileLogic)GetSysFileListFirst(emoji entity.EmojiFile)map[str
 }
 
 // update database column
-func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 string,count int)bool  {
+func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 string,count int64)bool  {
 	_,err := this.Orm.Table("sys_emoji_file").Where("md5_encode",md5).Data(map[string]interface{}{
 		"image_url" : url,
 		"cover_url" : cover,

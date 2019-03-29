@@ -114,7 +114,7 @@ func (this *SysEmojiFile)UploadFile(ctx *gin.Context)  {
 // async convert mp4 to gif
 func (this *SysEmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 	var emoji entity.EmojiFile
-	var sentcenCount int
+	var sentenceCount int64
 	code := ctx.Param("encode")
 	emoji = entity.EmojiFile{
 		Md5Encode : code,
@@ -126,16 +126,20 @@ func (this *SysEmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 	if len(result) == 2 {
 		var sysFilePath,sysAssFile,sysSaveName string
 		for _,val := range result{
-			if ok := val["extension"].(string) == ".mp4";ok{
+			if val["extension"].(string) == ".mp4"{
 				sysFilePath = val["path"].(string)
 			}
-			if ok := val["extension"].(string) == ".ass";ok{
+			if val["extension"].(string) == ".ass"{
 				sysAssFile  = val["base_path"].(string)
+				if val,ok := val["sentence_count"].(int64);ok{
+					sentenceCount = val
+				}
 			}
+
 			sysSaveName = val["name"].(string)
 			sysFileName = val["name"].(string)
-			sentcenCount= val["sentence_count"].(int)
 		}
+
 		sysAssFile += "_temp_" + sysSaveName + ".ass"
 		sysSaveName = config.ASSETS_PATH + "system/" + sysSaveName + gifExt
 		protocol,_ := ctx.Get("protocol")
@@ -163,7 +167,7 @@ func (this *SysEmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 		go func() {
 			this.GeneratorCoverFromVideo(sysFilePath,sysFileName,coverSave,code)
 		}()
-		if logic.NewSysEmojiFileLogic(database.GetOrm()).UpdateSysFileImageUrl(imageUrl,coverUrl,code,sentcenCount){
+		if logic.NewSysEmojiFileLogic(database.GetOrm()).UpdateSysFileImageUrl(imageUrl,coverUrl,code,sentenceCount){
 			system.PrintSuccess(ctx,201,"",map[string]interface{}{
 				"url" : imageUrl,
 				"cov" : coverUrl,
