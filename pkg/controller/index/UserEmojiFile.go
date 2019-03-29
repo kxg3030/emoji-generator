@@ -38,6 +38,7 @@ func (this *UserEmojiFile) EmojiGenerator(ctx *gin.Context){
 	emoji.Md5Encode  = html.EscapeString(ctx.Query("encode"))
 	body,_ := ioutil.ReadAll(ctx.Request.Body)
 	err    := json.Unmarshal(body,&emoji)
+	protocol,_ := ctx.Get("protocol")
 	unity.ErrorCheck(err)
 	sysFileInfo := logic.NewSysEmojiFileLogic(database.GetOrm()).GetSysFileListFirst(emoji)
 	if len(sysFileInfo) != 0 {
@@ -49,12 +50,12 @@ func (this *UserEmojiFile) EmojiGenerator(ctx *gin.Context){
 			go func() {
 				this.userUniqueId = userId.(string)
 				userEmoji.OpenId  = userId.(string)
-				userEmoji.ImageUrl= ctx.Request.Host + this.userFileSave + ".gif"
+				userEmoji.ImageUrl= protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif"
 				logic.NewUserEmojiFileLogic(database.GetOrm()).InsertNewRecord(userEmoji)
 			}()
 			if this.ExecuteCommand(){
 				system.PrintSuccess(ctx,201,"",map[string]interface{}{
-					"image_url" : ctx.Request.Host + this.userFileSave + ".gif",
+					"image_url" : protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif",
 				})
 			}
 			return

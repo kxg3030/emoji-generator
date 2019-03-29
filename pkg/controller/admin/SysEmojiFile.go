@@ -136,8 +136,9 @@ func (this *SysEmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 		}
 		sysAssFile += "_temp_" + sysSaveName + ".ass"
 		sysSaveName = config.ASSETS_PATH + "system/" + sysSaveName + gifExt
-		imageUrl   := ctx.Request.Host   + "/assets/system/" + sysFileName + gifExt
-		coverUrl   := ctx.Request.Host   + "/assets/system/" + sysFileName + pngExt
+		protocol,_ := ctx.Get("protocol")
+		imageUrl   := protocol.(string)  + ctx.Request.Host   + "/assets/system/" + sysFileName + gifExt
+		coverUrl   := protocol.(string)  + ctx.Request.Host   + "/assets/system/" + sysFileName + pngExt
 		coverSave  := config.ASSETS_PATH + "system/" + sysFileName + pngExt
 		if unity.DirExistValidate(config.ASSETS_PATH + "system/") == false{
 			unity.DirMakeAll(config.ASSETS_PATH + "system/")
