@@ -79,7 +79,7 @@ func (this *UserEmojiFile)AnalysisAss(fileName string,sentence string,userId str
 		unity.ErrorCheck(err)
 		matchLineStr := matchLineReg.FindString(string(fileStr))
 		if len(matchLineStr) == 0 {
-			unity.ErrorCheck(errors.New("can not match anything"))
+			unity.ErrorCheck(errors.New("无法匹配到任何字符串"))
 		}
 		matchLinePartReg,err := regexp.Compile("Dialogue: (\\d,\\d:\\d{0,2}:\\d{0,2}\\.\\d{0,2}){2},\\w+,(,\\d{0,2}){3}(,){2}")
 		matchLinePartStr := matchLinePartReg.FindString(matchLineStr)

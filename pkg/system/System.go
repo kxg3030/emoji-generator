@@ -23,6 +23,8 @@ var Exception = map[int]string{
 	117 : "空数据",
 	118 : "ssl验证失败",
 	119 : "404",
+
+	220 : "没有匹配任何字符串",
 }
 
 var Success   = map[int]string{
