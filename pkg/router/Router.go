@@ -25,12 +25,13 @@ func (this *Router)RegisterRouter()*gin.Engine  {
 	groupIndex := this.Router.Group("/api/v1")
 	// 用户登陆
 	groupIndex.GET("/user/login",index.NewUserList().Login)
+	// 获取封面列表
+	groupIndex.GET("/emoji/list" ,index.NewSysEmojiFile().GetEmojiFileList)
+
 	this.RegisterIndexMiddleWare(groupIndex)
 	{
 		// 用户创建GIF
 		groupIndex.POST("/emoji/create",index.NewUserEmojiFile().EmojiGenerator)
-		// 获取封面列表
-		groupIndex.GET("/emoji/list" ,index.NewSysEmojiFile().GetEmojiFileList)
 	}
 
 	groupAdmin := this.Router.Group("/api/emoji")

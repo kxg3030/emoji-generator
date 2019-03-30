@@ -48,7 +48,7 @@ var Exception = map[int]map[string]string{
 		"in"  : "签名验证失败",
 	},
 	112 : {
-		"out" : "创建失败",
+		"out" : "无法创建GIF",
 		"in"  : "mp4或ass文件不存在",
 	},
 	401 : {
