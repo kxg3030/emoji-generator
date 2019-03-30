@@ -30,6 +30,7 @@ func (this *UserList)Login(ctx *gin.Context)  {
 		userList.Avatar    = html.EscapeString(ctx.Query("avatarUrl"))
 		userInfoFromWeChat:= service.NewWeChat().GetUserOpenId(code)
 		if len(userInfoFromWeChat.OpenId) > 0{
+			userList.OpenId = userInfoFromWeChat.OpenId
 			result:= logic.NewUserListLogic(database.GetOrm()).FindUserRecord(userInfoFromWeChat.OpenId);
 			ctx.Writer.Header().Set("authorization",unity.GetToken("openId",userInfoFromWeChat.OpenId))
 			if len(result) != 0{
@@ -39,6 +40,7 @@ func (this *UserList)Login(ctx *gin.Context)  {
 				system.PrintSuccess(ctx,202,"",map[string]interface{}{})
 				return
 			}
+
 			if logic.NewUserListLogic(database.GetOrm()).InsertUserRecord(userList){
 				system.PrintSuccess(ctx,202,"",map[string]interface{}{})
 			}else{
