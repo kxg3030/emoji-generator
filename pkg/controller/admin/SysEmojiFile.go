@@ -77,6 +77,7 @@ func (this *SysEmojiFile)UploadFile(ctx *gin.Context)  {
 			fileNewStr     = string(fileStr)
 			sentenceSlice := strings.Split(sentence,"|")
 			matchLineCount,err := regexp.Compile(fmt.Sprintf(regRule,"\\d{0,3}"))
+			unity.ErrorCheck(err)
 			matchLineStrCount := matchLineCount.FindAllString(string(fileStr),-1)
 			if len(matchLineStrCount) != len(sentenceSlice){
 				system.PrintException(ctx,114,"", map[string]interface{}{})
@@ -105,7 +106,7 @@ func (this *SysEmojiFile)UploadFile(ctx *gin.Context)  {
 			system.PrintSuccess(ctx,200,"", map[string]interface{}{})
 			return
 		}
-		system.PrintException(ctx,102,"", map[string]interface{}{})
+		system.PrintSuccess(ctx,204,"", map[string]interface{}{})
 		return
 	}
 	system.PrintException(ctx,101,"", map[string]interface{}{})

@@ -35,9 +35,10 @@ func NewUserEmojiFile()*UserEmojiFile  {
 func (this *UserEmojiFile) EmojiGenerator(ctx *gin.Context){
 	var emoji     entity.EmojiFile
 	var userEmoji entity.UserEmojiFile
+	var err       error
 	emoji.Md5Encode  = html.EscapeString(ctx.Query("encode"))
 	body,_ := ioutil.ReadAll(ctx.Request.Body)
-	err    := json.Unmarshal(body,&emoji)
+	err     = json.Unmarshal(body,&emoji)
 	protocol,_ := ctx.Get("protocol")
 	unity.ErrorCheck(err)
 	sysFileInfo := logic.NewSysEmojiFileLogic(database.GetOrm()).GetSysFileListFirst(emoji)
@@ -46,19 +47,24 @@ func (this *UserEmojiFile) EmojiGenerator(ctx *gin.Context){
 		this.sysFilePath= sysFileInfo["path"].(string)
 		if userId,ok := ctx.Get("openId");ok{
 			userEmoji.CreateTime = unity.GetNowDateTime(config.SecondFormat)
-			this.userAssFilePath = this.AnalysisAss(sysFileInfo["name"].(string),emoji.Sentence,userId.(string))
-			go func() {
-				this.userUniqueId = userId.(string)
-				userEmoji.OpenId  = userId.(string)
-				userEmoji.ImageUrl= protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif"
-				logic.NewUserEmojiFileLogic(database.GetOrm()).InsertNewRecord(userEmoji)
-			}()
-			if this.ExecuteCommand(){
-				system.PrintSuccess(ctx,201,"",map[string]interface{}{
-					"image_url" : protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif",
-				})
+			this.userAssFilePath,err = this.AnalysisAss(sysFileInfo["name"].(string),emoji.Sentence,userId.(string))
+			if err == nil {
+				go func() {
+					this.userUniqueId = userId.(string)
+					userEmoji.OpenId  = userId.(string)
+					userEmoji.ImageUrl= protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif"
+					logic.NewUserEmojiFileLogic(database.GetOrm()).InsertNewRecord(userEmoji)
+				}()
+				if this.ExecuteCommand(){
+					system.PrintSuccess(ctx,201,"",map[string]interface{}{
+						"image_url" : protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif",
+					})
+				}
+				return
+			}else{
+				system.PrintException(ctx,220,"",map[string]interface{}{})
+				return
 			}
-			return
 		}
 		system.PrintException(ctx,401,"",map[string]interface{}{})
 		return
@@ -66,7 +72,7 @@ func (this *UserEmojiFile) EmojiGenerator(ctx *gin.Context){
 	system.PrintException(ctx,112,"",map[string]interface{}{})
 }
 
-func (this *UserEmojiFile)AnalysisAss(fileName string,sentence string,userId string)string  {
+func (this *UserEmojiFile)AnalysisAss(fileName string,sentence string,userId string)(string,error)  {
 	var fileNewStr string
 	pkgPrefix   := "./pkg"
 	fileStr,err := ioutil.ReadFile(this.sysAssPath)
@@ -79,9 +85,10 @@ func (this *UserEmojiFile)AnalysisAss(fileName string,sentence string,userId str
 		unity.ErrorCheck(err)
 		matchLineStr := matchLineReg.FindString(string(fileStr))
 		if len(matchLineStr) == 0 {
-			unity.ErrorCheck(errors.New("无法匹配到任何字符串"))
+			return "",errors.New("error")
 		}
 		matchLinePartReg,err := regexp.Compile("Dialogue: (\\d,\\d:\\d{0,2}:\\d{0,2}\\.\\d{0,2}){2},\\w+,(,\\d{0,2}){3}(,){2}")
+		unity.ErrorCheck(err)
 		matchLinePartStr := matchLinePartReg.FindString(matchLineStr)
 		matchLinePartStr += val
 		fileNewStr = matchLineReg.ReplaceAllString(fileNewStr,matchLinePartStr)
@@ -98,7 +105,7 @@ func (this *UserEmojiFile)AnalysisAss(fileName string,sentence string,userId str
 	unity.FileMake(userNewFile)
 	err = ioutil.WriteFile(userNewFile,[]byte(fileNewStr),os.ModePerm)
 	unity.ErrorCheck(err)
-	return userNewFile
+	return userNewFile,nil
 }
 
 func (this *UserEmojiFile)ExecuteCommand() (bool) {

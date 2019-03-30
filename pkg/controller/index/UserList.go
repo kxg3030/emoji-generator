@@ -27,7 +27,7 @@ func (this *UserList)Login(ctx *gin.Context)  {
 	code := html.EscapeString(ctx.Query("code"))
 	if validate.WhetherParamExist(code) {
 		userList.NickName  = html.EscapeString(ctx.Query("nickName"))
-		userList.Avatar    = html.EscapeString(ctx.Query("avatar"))
+		userList.Avatar    = html.EscapeString(ctx.Query("avatarUrl"))
 		userInfoFromWeChat:= service.NewWeChat().GetUserOpenId(code)
 		if len(userInfoFromWeChat.OpenId) > 0{
 			result:= logic.NewUserListLogic(database.GetOrm()).FindUserRecord(userInfoFromWeChat.OpenId);
