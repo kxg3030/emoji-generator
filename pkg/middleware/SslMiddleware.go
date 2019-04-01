@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"emoji/pkg/config"
 	"emoji/pkg/system"
 	"github.com/gin-gonic/gin"
 	"github.com/unrolled/secure"
@@ -25,7 +26,7 @@ func (this *SslMiddleware)Render()gin.HandlerFunc  {
 		}
 		secureMiddleware := secure.New(secure.Options{
 			SSLRedirect: true,
-			SSLHost    : "0.0.0.0:9527",
+			SSLHost    : config.Config["ListenPort"].(string),
 		})
 		err := secureMiddleware.Process(context.Writer, context.Request)
 		if err != nil {
