@@ -22,7 +22,7 @@ const SecondFormat  = "2006" + OS_SEPREATOR + "01" + OS_SEPREATOR + "02" + OS_SE
 
 
 var Extension = []string{
-	".mp4",".gif",".png",".jpeg",".jpg",".ass",".srt",
+	".mp4",".ass",".srt",
 }
 
 var Config = map[string]interface{}{
