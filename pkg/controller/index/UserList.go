@@ -34,13 +34,13 @@ func (this *UserList)Login(ctx *gin.Context)  {
 			result:= logic.NewUserListLogic(database.GetOrm()).FindUserRecord(userInfoFromWeChat.OpenId);
 			ctx.Writer.Header().Set("authorization",unity.GetToken("openId",userInfoFromWeChat.OpenId))
 			if len(result) != 0{
-				go func() {
-					logic.NewUserListLogic(database.GetOrm()).UpdateUserColumn(userInfoFromWeChat.OpenId,userList)
-				}()
-				system.PrintSuccess(ctx,202,"",map[string]interface{}{})
+				if logic.NewUserListLogic(database.GetOrm()).UpdateUserColumn(userInfoFromWeChat.OpenId,userList){
+					system.PrintSuccess(ctx,202,"",map[string]interface{}{})
+					return
+				}
+				system.PrintSuccess(ctx,221,"",map[string]interface{}{})
 				return
 			}
-
 			if logic.NewUserListLogic(database.GetOrm()).InsertUserRecord(userList){
 				system.PrintSuccess(ctx,202,"",map[string]interface{}{})
 			}else{

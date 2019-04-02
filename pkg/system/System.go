@@ -83,7 +83,18 @@ var Exception = map[int]map[string]string{
 		"out" : "创建失败",
 		"in"  : "没有匹配任何字符串",
 	},
-
+	221 : {
+		"out" : "登陆失败",
+		"in"  : "更新用户信息失败",
+	},
+	222 : {
+		"out" : "创建失败",
+		"in"  : "执行ffmpeg命令失败",
+	},
+	223 : {
+		"out" : "创建失败",
+		"in"  : "插入用户创建记录失败",
+	},
 }
 
 var Success   = map[int]map[string]string{

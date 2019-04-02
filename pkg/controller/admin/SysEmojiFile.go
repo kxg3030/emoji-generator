@@ -162,7 +162,7 @@ func (this *SysEmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 			var command =  &exec.Cmd{}
 			command = exec.Command("ffmpeg","-y","-i",sysFilePath,"-vf",fmt.Sprintf("ass=%s",sysAssFile),sysSaveName)
 			if _,err := command.CombinedOutput();err != nil{
-				unity.ErrorCheck(err)
+
 			}
 		}()
 		go func() {

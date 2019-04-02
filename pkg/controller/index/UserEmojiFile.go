@@ -49,18 +49,23 @@ func (this *UserEmojiFile) EmojiGenerator(ctx *gin.Context){
 			userEmoji.CreateTime = unity.GetNowDateTime(config.SecondFormat)
 			this.userAssFilePath,err = this.AnalysisAss(sysFileInfo["name"].(string),emoji.Sentence,userId.(string))
 			if err == nil {
-				go func() {
-					this.userUniqueId = userId.(string)
-					userEmoji.OpenId  = userId.(string)
-					userEmoji.ImageUrl= protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif"
-					logic.NewUserEmojiFileLogic(database.GetOrm()).InsertNewRecord(userEmoji)
-				}()
+				this.userUniqueId = userId.(string)
+				userEmoji.OpenId  = userId.(string)
+				userEmoji.ImageUrl= protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif"
 				if this.ExecuteCommand(){
-					system.PrintSuccess(ctx,201,"",map[string]interface{}{
-						"image_url" : protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif",
-					})
+					if logic.NewUserEmojiFileLogic(database.GetOrm()).InsertNewRecord(userEmoji){
+						system.PrintSuccess(ctx,201,"",map[string]interface{}{
+							"image_url" : protocol.(string) + ctx.Request.Host + this.userFileSave + ".gif",
+						})
+						return
+					}else{
+						system.PrintException(ctx,223,"",map[string]interface{}{})
+						return
+					}
+				}else{
+					system.PrintException(ctx,222,"",map[string]interface{}{})
+					return
 				}
-				return
 			}else{
 				system.PrintException(ctx,220,"",map[string]interface{}{})
 				return
