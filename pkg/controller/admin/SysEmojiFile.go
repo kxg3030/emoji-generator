@@ -160,7 +160,7 @@ func (this *SysEmojiFile)GeneratorGifFromVideo(ctx *gin.Context)  {
 		}
 		go func() {
 			var command =  &exec.Cmd{}
-			command = exec.Command("ffmpeg","-y","-i",sysFilePath,"-vf",fmt.Sprintf("ass=%s",sysAssFile),"-r","10","-b:v","1500k","-s","400*300","-bufsize","1500k",sysSaveName)
+			command = exec.Command("ffmpeg","-y","-i",sysFilePath,"-vf",fmt.Sprintf("ass=%s",sysAssFile),"-r","10","-b:v","1500k","-s","250*300","-bufsize","1500k",sysSaveName)
 			if _,err := command.CombinedOutput();err != nil{
 
 			}
