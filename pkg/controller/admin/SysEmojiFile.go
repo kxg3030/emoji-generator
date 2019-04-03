@@ -186,7 +186,7 @@ func (this SysEmojiFile)GeneratorCoverFromVideo(sysFilePath string,sysFileName s
 	var command =  &exec.Cmd{}
 	command = exec.Command("ffmpeg","-y",
 		"-i", sysFilePath, "-vframes", "1", "-ss", "0:0:0", "-an",
-		"-vcodec", "png", "-f", "rawvideo", "-s", "100*100", saveFilePath)
+		"-vcodec", "png", "-f", "rawvideo", "-s", "200*200", saveFilePath)
 	if _,err := command.CombinedOutput();err != nil {
 		return false
 	}
