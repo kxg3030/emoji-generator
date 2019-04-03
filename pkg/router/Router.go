@@ -25,8 +25,10 @@ func (this *Router)RegisterRouter()*gin.Engine  {
 	groupIndex := this.Router.Group("/api/v1")
 	// 用户登陆
 	groupIndex.GET("/user/login",index.NewUserList().Login)
-	// 获取封面列表
+	// 素材列表
 	groupIndex.GET("/emoji/list" ,index.NewSysEmojiFile().GetEmojiFileList)
+	// 素材详情
+	groupIndex.GET("/emoji/detail" ,index.NewSysEmojiFile().GetEmojiFileDetail)
 
 	this.RegisterIndexMiddleWare(groupIndex)
 	{

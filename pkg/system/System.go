@@ -69,7 +69,7 @@ var Exception = map[int]map[string]string{
 	},
 	117 : {
 		"out" : "空数据",
-		"in"  : "封面列表数据为空",
+		"in"  : "数据为空",
 	},
 	118 : {
 		"out" : "ssl验证失败",
@@ -99,24 +99,28 @@ var Exception = map[int]map[string]string{
 
 var Success   = map[int]map[string]string{
 	200 : {
-		"out" : "上传成功",
+		"out" : "成功",
 		"in"  : "添加文件信息成功",
 	},
 	201 : {
-		"out" : "创建成功",
+		"out" : "成功",
 		"in"  : "管理员创建GIF成功",
 	},
 	202 : {
-		"out" : "登陆成功",
+		"out" : "成功",
 		"in"  : "更新用户信息成功",
 	},
 	203 : {
-		"out" : "获取列表成功",
+		"out" : "成功",
 		"in"  : "用户获取GIF列表成功",
 	},
 	204 : {
-		"out" : "上传成功",
+		"out" : "成功",
 		"in"  : "更新文件信息成功",
+	},
+	205 : {
+		"out" : "成功",
+		"in"  : "成功",
 	},
 }
 

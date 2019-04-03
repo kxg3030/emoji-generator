@@ -19,3 +19,4 @@ func setRunMode()  {
 		gin.SetMode(gin.ReleaseMode)
 	}
 }
+

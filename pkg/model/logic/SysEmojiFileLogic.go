@@ -4,6 +4,7 @@ import (
 	"emoji/pkg/model/entity"
 	"emoji/pkg/unity"
 	"github.com/gohouse/gorose"
+	"strings"
 )
 
 type SysEmojiFileLogic struct {
@@ -73,10 +74,27 @@ func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 
 
 // select record
 func (this *SysEmojiFileLogic)SelectSysFileList(filed string)[]map[string]interface{}  {
-	result,err := this.Orm.Table("sys_emoji_file").Where("extension",".mp4").Fields(filed).Get()
+	result,err := this.Orm.Table("sys_emoji_file").Where("extension",".ass").Fields(filed).Get()
 	unity.ErrorCheck(err)
 	if len(result) == 0{
 		return []map[string]interface{}{}
+	}
+	return result
+}
+
+// get one record
+func (this *SysEmojiFileLogic)GetsSysFileFirstById(id string)map[string]interface{}  {
+	filed := "id,image_url,sentence_count,sentence"
+	result,err := this.Orm.Table("sys_emoji_file").Where("id",id).Fields(filed).First()
+	if err != nil {
+		return map[string]interface{}{}
+	}
+	if len(result) > 1{
+		for key ,value := range result{
+			if key == "sentence"{
+				result[key] = strings.Split(value.(string),"|")
+			}
+		}
 	}
 	return result
 }
