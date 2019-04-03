@@ -84,7 +84,7 @@ func (this *SysEmojiFileLogic)SelectSysFileList(filed string)[]map[string]interf
 
 // get one record
 func (this *SysEmojiFileLogic)GetsSysFileFirstById(id string)map[string]interface{}  {
-	filed := "id,image_url,sentence_count,sentence"
+	filed := "id,image_url,sentence_count,sentence,md5_encode"
 	result,err := this.Orm.Table("sys_emoji_file").Where("id",id).Fields(filed).First()
 	if err != nil {
 		return map[string]interface{}{}
