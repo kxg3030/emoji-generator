@@ -4,6 +4,7 @@ import (
 	"emoji/pkg/model/entity"
 	"emoji/pkg/unity"
 	"github.com/gohouse/gorose"
+	"strconv"
 	"strings"
 )
 
@@ -73,8 +74,16 @@ func (this *SysEmojiFileLogic)UpdateSysFileImageUrl(url string,cover string,md5 
 }
 
 // select record
-func (this *SysEmojiFileLogic)SelectSysFileList(filed string)[]map[string]interface{}  {
-	result,err := this.Orm.Table("sys_emoji_file").Where("extension",".ass").Fields(filed).Get()
+func (this *SysEmojiFileLogic)SelectSysFileList(filed ,page ,size string)[]map[string]interface{}  {
+	pageNum,_ := strconv.Atoi(page)
+	pageSize,_:= strconv.Atoi(size)
+	startIndex := (pageNum - 1) * pageSize
+	result,err := this.Orm.Table("sys_emoji_file").
+		Where("extension",".ass").
+		Fields(filed).
+		Offset(startIndex).
+		Limit(pageSize).
+		Get()
 	unity.ErrorCheck(err)
 	if len(result) == 0{
 		return []map[string]interface{}{}

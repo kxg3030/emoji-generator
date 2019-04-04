@@ -20,7 +20,9 @@ func NewSysEmojiFile() *SysEmojiFile  {
 
 func (this *SysEmojiFile)GetEmojiFileList(ctx *gin.Context)  {
 	filed := "id,name,cover_url"
-	result := logic.NewSysEmojiFileLogic(database.GetOrm()).SelectSysFileList(filed)
+	page  := html.EscapeString(ctx.DefaultQuery("page","1"))
+	size  := html.EscapeString(ctx.DefaultQuery("size","10"))
+	result := logic.NewSysEmojiFileLogic(database.GetOrm()).SelectSysFileList(filed,page,size)
 	if len(result) != 0 {
 		system.PrintSuccess(ctx,203,"",result)
 		return
